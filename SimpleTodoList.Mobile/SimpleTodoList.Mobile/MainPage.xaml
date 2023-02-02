@@ -23,9 +23,15 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        
                         <FlexLayout AlignItems="Center" JustifyContent="SpaceBetween" Padding="5">
-                            <Label Text="{Binding Description}" FontSize="Large"/>
-                            <ImageButton Source="delete.png" Scale="0.5" />
+                            <Label Text="{Binding Description}"
+                                   FontSize="Large"/>
+
+                            <ImageButton Source="delete.png" 
+                                         Scale="0.5" 
+                                         Command="{Binding Path=BindingContext.RemoveTodoItemCommand, Source={x:Reference TodoList}}" 
+                                         CommandParameter="{Binding Id}" />
                         </FlexLayout>
                     </ViewCell>
                 </DataTemplate>
