@@ -27,7 +27,9 @@ namespace SimpleTodoList.Mobile.ViewModels
                 IsComplete = false,
                 IsDeleted = false,
             }; 
-            TodoItems.Add(todoItem);    
+            TodoItems.Add(todoItem);
+            NewTodoInputValue = string.Empty; 
+            
         }
     }
 }

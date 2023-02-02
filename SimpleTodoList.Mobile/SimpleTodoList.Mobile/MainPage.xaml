@@ -14,14 +14,19 @@
             <Label Text="Simple Todo Application" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
         
-        <Entry x:Name="InputField" Text="{Binding NewTodoInputValue}" ReturnCommand="{Binding AddNewTodoItemCommand}" Placeholder="Enter a New Todo" />
-  
-    <!-- Todo List View -->
+        <Entry x:Name="InputField" Text="{Binding NewTodoInputValue}" Placeholder="Enter a New Todo"/>
+        
+        <Button  Text="Add" Command="{Binding AddNewTodoItemCommand}"/>
+
+        <!-- Todo List View -->
     <ListView x:Name="TodoList" ItemsSource="{Binding TodoItems}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label Text="{Binding Description}" FontSize="Large"/>
+                        <FlexLayout AlignItems="Center" JustifyContent="SpaceBetween" Padding="5">
+                            <Label Text="{Binding Description}" FontSize="Large"/>
+                            <ImageButton Source="delete.png" Scale="0.5" />
+                        </FlexLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
