@@ -1,24 +1,38 @@
 ﻿using SimpleTodoList.Mobile.Models;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace SimpleTodoList.Mobile.ViewModels
 {
-    public class TodoListViewModel
+    public class TodoListViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<TodoItemDTO> TodoItems { get; set; }
-        public string NewTodoInputValue { get; set; }
+        private string _newTodoInputValue { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand AddNewTodoItemCommand { get; set; }
-        public ICommand RemoveTodoItemCommand { get; set; } 
+        public ICommand RemoveTodoItemCommand { get; set; }
         public TodoListViewModel()
         {
             TodoItems = new ObservableCollection<TodoItemDTO>();
             AddNewTodoItemCommand = new Command(CreateNewTodoItem);
-            RemoveTodoItemCommand = new Command(DeleteTodoItem); 
+            RemoveTodoItemCommand = new Command(DeleteTodoItem);
+        }
+
+        public string NewTodoInputValue
+        {
+            get { return _newTodoInputValue; }
+            set
+            {
+                _newTodoInputValue = value;
+                OnPropertyChanged();
+            }
         }
 
         private void DeleteTodoItem(object obj)
@@ -41,10 +55,17 @@ namespace SimpleTodoList.Mobile.ViewModels
                 Description = NewTodoInputValue,
                 IsComplete = false,
                 IsDeleted = false,
-            }; 
+            };
+            NewTodoInputValue = "";
             TodoItems.Add(todoItem);
-            NewTodoInputValue = string.Empty; 
-            
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

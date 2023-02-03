@@ -14,9 +14,22 @@
             <Label Text="Simple Todo Application" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
         </Frame>
         
-        <Entry x:Name="InputField" Text="{Binding NewTodoInputValue}" Placeholder="Enter a New Todo"/>
+        <!-- Text Box -->
+        <Entry x:Name="InputField" Text="{Binding NewTodoInputValue, Mode=TwoWay}" Placeholder="Enter a New Todo"/>
         
-        <Button  Text="Add" Command="{Binding AddNewTodoItemCommand}"/>
+        <Button  Text="Add"
+                 Command="{Binding AddNewTodoItemCommand}"
+                 BackgroundColor="#2196F3"
+                 CornerRadius="30"
+                 Margin="10"
+                 Padding="10"
+                 TextColor="White"
+                 BorderColor="Gray"
+                 BorderWidth="1"
+                 VerticalOptions="CenterAndExpand"
+                 HorizontalOptions="Center"
+                 WidthRequest="100"
+                 />
 
         <!-- Todo List View -->
     <ListView x:Name="TodoList" ItemsSource="{Binding TodoItems}">
@@ -25,6 +38,7 @@
                     <ViewCell>
                         
                         <FlexLayout AlignItems="Center" JustifyContent="SpaceBetween" Padding="5">
+                            <CheckBox/>
                             <Label Text="{Binding Description}"
                                    FontSize="Large"/>
 
