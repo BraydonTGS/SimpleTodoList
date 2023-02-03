@@ -37,19 +37,27 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        
                         <FlexLayout AlignItems="Center" JustifyContent="SpaceBetween" Padding="5">
-
-                            <input:CheckBox 
-                                IsChecked="{Binding IsComplete}"
-                                />
-                            <Label Text="{Binding Description}"
-                                   FontSize="Large"/>
-
+                            
+                            <!-- Checkbox and Todo -->
+                            <ContentView>
+                                <FlexLayout AlignItems="Center">
+                                    <input:CheckBox 
+                                        IsChecked="{Binding IsComplete}"
+                                            />
+                                    <Label Text="{Binding Description}"
+                                           FontSize="Large"
+                                           Margin="10, 0, 0, 2"
+                                           />
+                                </FlexLayout>
+                            </ContentView>
+                            
+                            <!-- Delete Icon -->
                             <ImageButton Source="delete.png" 
-                                         Scale="0.5" 
+                                         Margin="0, 0, 0, 1"
                                          Command="{Binding Path=BindingContext.RemoveTodoItemCommand, Source={x:Reference TodoList}}" 
-                                         CommandParameter="{Binding Id}" />
+                                         CommandParameter="{Binding Id}" 
+                                         />
                         </FlexLayout>
                     </ViewCell>
                 </DataTemplate>
