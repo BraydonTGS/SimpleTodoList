@@ -1,4 +1,5 @@
 ﻿using SimpleTodoList.Mobile.Models;
+using SimpleTodoList.Mobile.Service;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,11 +7,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace SimpleTodoList.Mobile.ViewModels
 {
     public class TodoListViewModel : INotifyPropertyChanged
     {
+
+        private RestService _service;
         public ObservableCollection<TodoItemDTO> TodoItems { get; set; }
         private string _newTodoInputValue { get; set; }
 
@@ -20,6 +25,8 @@ namespace SimpleTodoList.Mobile.ViewModels
         public ICommand RemoveTodoItemCommand { get; set; }
         public TodoListViewModel()
         {
+            _service = new RestService();
+            LoadDataFromApi();
             TodoItems = new ObservableCollection<TodoItemDTO>();
             AddNewTodoItemCommand = new Command(CreateNewTodoItem);
             RemoveTodoItemCommand = new Command(DeleteTodoItem);
@@ -60,6 +67,15 @@ namespace SimpleTodoList.Mobile.ViewModels
             TodoItems.Add(todoItem);
         }
 
+        public void LoadDataFromApi()
+        {
+            var url = _service.TodoUrl;
+            var status = _service.client.GetStringAsync(url).Result;
+            var result = JsonConvert.DeserializeObject<TodoItemDTO>(status);
+            TodoItems.Add(result);  
+
+        }
+ 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
